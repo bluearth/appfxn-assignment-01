@@ -1,0 +1,36 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+#app {
+  display: flex;
+  height: 100%;
+}
+
+#map {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.map-control {
+  margin: 5px;
+  padding: 5px;
+  /* 
+  background-color: aliceblue;
+  border-color: antiquewhite; 
+  */
+}
