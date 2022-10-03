@@ -1,11 +1,14 @@
 import { createStore, applyMiddleware } from "redux";
-import { logActionOnDispatch } from "./enhancers";
+import { composeWithDevTools } from "@redux-devtools/extension";
 import thunkMiddleware from "redux-thunk";
 
 const initialState = {
+  synched: false,
+  synching: false,
+  lastError: null,
   searchPanelVisible: true,
   historyPanelVisible: true,
-  placeHistory: [],
+  placeHistory: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,17 +16,17 @@ const reducer = (state = initialState, action) => {
   const newState = {
     ...state,
     // Don't forget to deep-clone members too
-    placeHistory: [...state.placeHistory],
+    placeHistory: [...state.placeHistory]
   };
 
-  // Determine next state
   switch (action.type) {
     case "history/place_added":
       if (action.payload && action.payload.place) {
         newState.placeHistory = [
           action.payload.place,
-          ...newState.placeHistory,
+          ...newState.placeHistory
         ];
+        newState.synched = false;
       }
       break;
 
@@ -41,10 +44,40 @@ const reducer = (state = initialState, action) => {
       newState.historyPanelVisible = !state.historyPanelVisible;
       break;
 
+    case "state_synching":
+      newState.synching = true;
+      break;
+
+    case "state_synching_failed":
+      newState.synching = false;
+      newState.lastError = action.payload.error;
+      break;
+
+    case "state_synched":
+      newState.synched = true;
+      newState.lastError = null;
+      newState.synching = false;
+      break;
+
+    case "state_restored":
+      if (action.payload && action.payload.state) {
+        newState.placeHistory = action.payload.state.placeHistory;
+        newState.synching = false;
+        newState.synched = true;
+        newState.lastError = null;
+      }
+      break;
+
     default:
       break;
   }
   return newState;
 };
 
-export default createStore(reducer, initialState, logActionOnDispatch);
+const store = createStore(
+  reducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(thunkMiddleware))
+);
+
+export default store;

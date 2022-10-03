@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 export default function MapControl({
   map,
@@ -22,7 +22,11 @@ export default function MapControl({
 
   return (
     <div ref={ref} className={className} style={style}>
-      {children}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, { map, className });
+        }
+      })}
     </div>
   );
 }

@@ -12,6 +12,7 @@
     "@googlemaps/typescript-guards": "2.0.3",
     "@mui/icons-material": "5.10.6",
     "@mui/material": "5.10.7",
+    "@redux-devtools/extension": "3.2.3",
     "@reduxjs/toolkit": "1.8.5",
     "fast-equals": "4.0.3",
     "react": "18.2.0",

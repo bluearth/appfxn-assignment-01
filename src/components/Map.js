@@ -8,7 +8,16 @@ export default function Map({ children, style, ...options }) {
 
   React.useEffect(() => {
     if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, {}));
+      setMap(
+        new window.google.maps.Map(ref.current, {
+          mapTypeControlOptions: {
+            position: window.google.maps.ControlPosition.BOTTOM_RIGHT
+          },
+          fullscreenControlOptions: {
+            position: window.google.maps.ControlPosition.BOTTOM_RIGHT
+          }
+        })
+      );
     }
   }, [ref, map]);
 
