@@ -20,6 +20,10 @@ export default function AutoCompleteControl({
   const [autoComplete, setAutoComplete] = useState();
 
   useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+
     if (map && inputRef.current && !autoComplete) {
       const ac = new window.google.maps.places.Autocomplete(
         inputRef.current,
@@ -27,9 +31,10 @@ export default function AutoCompleteControl({
       );
       ac.addListener("place_changed", () => {
         const place = ac.getPlace();
-        console.log(jumpToPlace);
+        if (place && (!place.geometry || !place.geometry.location)) return;
         jumpToPlace(map, place);
         dispatch({ type: "history/place_added", payload: { place } });
+        inputRef.current.focus();
       });
 
       // Keep the Autocomplete reference in component's
@@ -44,16 +49,20 @@ export default function AutoCompleteControl({
 
   return (
     <MapControl map={map} position={position} className="map-control">
-      <Card>
+      <Card sx={{ minWidth: "33vw", maxWidth: "33vw" }}>
         <CardContent>
           {/* TODO replace <input> with MUI component */}
-          <Box>
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
             <TextField
+              sx={{ flexGrow: 1 }}
               variant="outlined"
               label="Search places..."
               inputRef={inputRef}
             />
-            <IconButton onClick={toggleHistoryPanelClicked}>
+            <IconButton
+              sx={{ flexGrow: 0 }}
+              onClick={toggleHistoryPanelClicked}
+            >
               <YoutubeSearchedForIcon />
             </IconButton>
           </Box>

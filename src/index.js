@@ -7,10 +7,6 @@ import store from "./redux/store";
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 
-store.subscribe(() => {
-  console.log(store.getState());
-});
-
 root.render(
   <Provider store={store}>
     <StrictMode>
