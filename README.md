@@ -21,13 +21,13 @@ You are to design one simple single page and use Google Place Autocomplete to fi
 
 ## Solution Summary
 
-Here we demonstrate a simple React app to demonstrate:
+Here we demonstrate a simple React app to show:
 
 - The use of Google Map's Place Autocomplete API to obtain place search suggestion.
-- The use of Redux and Redux Thunk to manage React application state.
-- The use of Material UI's component and styling framework as Google Map Controls
+- The use of Redux and Redux Thunk to manage React application state, in this case user's search history.
+- The use of Material UI's component and styling framework as Google Map Controls.
 
-The following is the component hierarchy for the app. For simplicity, some utility components like Google Map Wrapper component aren't shown here.
+The following diagram is the component hierarchy. For simplicity, some utility components like Google Map Wrapper component are omitted.
 
 ```
 
@@ -39,7 +39,9 @@ The following is the component hierarchy for the app. For simplicity, some utili
 
 ```
 
-The Map component holds a react ref to an instance of [`google.maps.Map`](https://developers.google.com/maps/documentation/javascript/reference/map). It passes down the map instance to it's children. `Map` component is designed to have zero or more `MapControl` as it's children. A `MapControl` is react component that holds reference to a DOM node that is to be treated as Custom Map Control. A `MapControl` is not required to have visual UI. It's something for it's children to consider.
+The Map component holds a react ref to an instance of [`google.maps.Map`](https://developers.google.com/maps/documentation/javascript/reference/map). It passes down the map instance to it's children. `Map` component is designed to have zero or more `MapControl` as it's children.
+
+A `MapControl` is react component that holds reference to a DOM node that is to be treated as Custom Map Control. A `MapControl` is not required to have visual UI. It's something for it's children to consider.
 
 The AutoCompleteControl uses Google Map's [Place Autocomplete service](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete) to obtain search suggestions. Once user selects one of the suggested places, the map will be panned to that place and the place will be added to user's search history. The UI for this map controls uses Material UI.
 
@@ -62,7 +64,6 @@ View and run the code using CodeSandbox.
 # cd appfxn-exercise-01
 # npm install
 # npm start
-
 ```
 
 Be sure to view and edit `config.js` to adjust things like Google Map's API key, local storage prefix, etc.
