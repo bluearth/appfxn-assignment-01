@@ -34,6 +34,7 @@ export default function PlaceHistoryControl({
   const onPlaceClicked = (ev, index) => {
     const place = index >= 0 && index < places.length ? places[index] : null;
     if (!place) return;
+    if (!place.geometry || !place.geometry.location) return;
     jumpToPlace(map, place);
   };
 
